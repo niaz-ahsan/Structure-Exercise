@@ -8,14 +8,14 @@ Problem Statement: Decode a 32 bit packet, extract respective bits & store them 
 #include <stdint.h>
 
 struct packet_data {
-	uint8_t crc; 		// 2 bits
-	uint8_t status;		// 1 bit
-	uint16_t payload;	// 12 bits
-	uint8_t bat;		// 3 bits
-	uint8_t sensor;		// 3 bits
-	uint8_t long_addr;	// 8 bits
-	uint8_t short_addr;	// 2 bits
-	uint8_t addr_mode;	// 1 bits
+	uint32_t crc:2; 		// 2 bits
+	uint32_t status:1;		// 1 bit
+	uint32_t payload:12;	// 12 bits
+	uint32_t bat:3;		// 3 bits
+	uint32_t sensor:3;		// 3 bits
+	uint32_t long_addr:8;	// 8 bits
+	uint32_t short_addr:2;	// 2 bits
+	uint32_t addr_mode:1;	// 1 bits
 };
 
 int extract_bit(uint32_t *data, uint8_t bit_start_position, uint8_t bit_end_position) {
@@ -69,4 +69,6 @@ int main(void) {
 	packet.addr_mode = addr_mode;
 
 	print_packet(&packet);
+
+	printf("Size of decoded packet: %d bytes\n", sizeof(packet));
 }
